@@ -96,7 +96,7 @@ int nbatches, batchsize;
 map<int,map<int,int> > left_entity,right_entity;
 map<int,double> left_num,right_num;
 
-int n,n_1,n_w,method;		//n£ºdimension of entity/relation, n_1: dimension of feature_vec in 1st-layer CNN, n_w: dimension of word 
+int n,n_1,n_w,method;		//nÂ£Âºdimension of entity/relation, n_1: dimension of feature_vec in 1st-layer CNN, n_w: dimension of word 
 double res_triple,res_cnn,res_c_e,res_e_c,res_normal;		//loss function value
 double res_thread_triple[THREADS_NUM], res_thread_cnn[THREADS_NUM], res_thread_normal[THREADS_NUM];		//loss for each thread
 double res_thread_c_e[THREADS_NUM], res_thread_e_c[THREADS_NUM];
@@ -986,7 +986,7 @@ void prepare()
 	FILE* f3 = fopen("../data/word2id.txt","r");
 	FILE* f4 = fopen("../data/entityWords.txt","r");
 	int x;
-	//build entity2ID¡¢ID2entity map
+	//build entity2IDÂ¡Â¢ID2entity map
 	while (fscanf(f1,"%s%d",buf,&x)==2)
 	{
 		string st=buf;
@@ -994,7 +994,7 @@ void prepare()
 		id2entity[x]=st;		//<ID,entity>
 		entity_num++;
 	}
-	//build relation2ID¡¢ID2relation map
+	//build relation2IDÂ¡Â¢ID2relation map
 	while (fscanf(f2,"%s%d",buf,&x)==2)
 	{
 		string st=buf;
@@ -1002,7 +1002,7 @@ void prepare()
 		id2relation[x]=st;
 		relation_num++;
 	}
-	//build word2ID¡¢ID2word map
+	//build word2IDÂ¡Â¢ID2word map
 	while (fscanf(f3,"%s%d",buf,&x)==2)
 	{
 		string st=buf;
