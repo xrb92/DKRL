@@ -1,3 +1,4 @@
+
 #include<iostream>
 #include<cstring>
 #include<cstdio>
@@ -8,21 +9,21 @@
 #include<algorithm>
 #include<cmath>
 #include<cstdlib>
-
 #include <fstream>
 
 using namespace std;
 
-
+//Ruobing Xie
+//Representation Learning of Knowledge Graphs with Entity Descriptions
 
 bool debug=false;
 bool L1_flag=1;
 
-//convolutional layer weight
+//convolutional layer
 int window_1 = 2;		//1st window size
 int window_2 = 1;		//2nd window size
-double **conv_w1;		//1st convolutional layer weight matrix, n1*(n_w*window)
-double **conv_w2;		//1st convolutional layer weight matrix, n*(n_1*window)
+double **conv_w1;
+double **conv_w2;
 int n_pooling_1 = 4;		//1st layer 4-pooling
 
 string version;
@@ -34,13 +35,13 @@ map<int,map<int,int> > entity2num;
 map<int,int> e2num;
 map<pair<string,string>,map<string,double> > rel_left,rel_right;
 
-int relation_num,entity_num,word_num;		//记录relation与entity的数目
-map<string,int> relation2id,entity2id,word2id;		//<relation,ID>
-vector<vector<int> > entityWords_vec;		//记录各entity的特征词word_ID
+int relation_num,entity_num,word_num;
+map<string,int> relation2id,entity2id,word2id;
+vector<vector<int> > entityWords_vec;
 
 int n = 100;
 int n_1 = 100;
-int n_w = 100;		//dimention of words
+int n_w = 100;
 
 double sigmod(double x)
 {
@@ -85,12 +86,11 @@ double cmp(pair<int,double> a, pair<int,double> b)
 
 class Test{
     vector<vector<double> > relation_vec,cnn_vec,word_vec;
-
-
     vector<int> h,l,r;
     vector<int> fb_h,fb_l,fb_r;
     map<pair<int,int>, map<int,int> > ok;
     double res ;
+	
 public:
     void add(int x,int y,int z, bool flag)
     {
@@ -103,10 +103,10 @@ public:
         ok[make_pair(x,z)][y]=1;
     }
 	
-	double norm(vector<double> &a)		//向量正则化
+	double norm(vector<double> &a)
     {
-        double x = vec_len(a);		//返回a的模长
-        if (x>1)		//只有模长大于1时需要正则化
+        double x = vec_len(a);
+        if (x>1)
         for (int ii=0; ii<a.size(); ii++)
                 a[ii]/=x;
         return 0;
@@ -134,7 +134,7 @@ public:
     void run()
     {
 		//relation_vec
-        FILE* f1 = fopen(("../res/relation2vec."+version).c_str(),"r");		//训练模型文件
+        FILE* f1 = fopen(("../res/relation2vec."+version).c_str(),"r");
         cout<<relation_num<<' '<<entity_num<<endl;
         int relation_num_fb=relation_num;
         relation_vec.resize(relation_num_fb);
@@ -144,10 +144,9 @@ public:
             for (int ii=0; ii<n; ii++)
                 fscanf(f1,"%lf",&relation_vec[i][ii]);
         }
-		//第一层卷积层weight matrix
 		FILE* f2 = fopen(("../res/weight1."+version).c_str(),"r");
 		conv_w1 = new double *[n_1];
-		for (int i=0; i<n_1; i++)		//随机赋初值
+		for (int i=0; i<n_1; i++)
         {
 			conv_w1[i] = new double[n_w*window_1];
             for (int ii=0; ii<n_w*window_1; ii++)
@@ -155,10 +154,9 @@ public:
 				fscanf(f2,"%lf",&conv_w1[i][ii]);
 			}
         }
-		//第二层卷积层weight matrix
 		FILE* f3 = fopen(("../res/weight2."+version).c_str(),"r");
 		conv_w2 = new double *[n];
-		for (int i=0; i<n; i++)		//随机赋初值
+		for (int i=0; i<n; i++)
         {
 			conv_w2[i] = new double[n_1*window_2];
             for (int ii=0; ii<n_1*window_2; ii++)
@@ -168,7 +166,7 @@ public:
         }
 		//word_vec
 		FILE* f4 = fopen(("../res/word2vec."+version).c_str(),"r");
-		word_vec.resize(word_num);		//word_vec分配空间
+		word_vec.resize(word_num);
 		for (int i=0; i<word_vec.size(); i++)
 			word_vec[i].resize(n_w);
 		for (int i=0; i<word_num;i++)
@@ -183,33 +181,33 @@ public:
         fclose(f3);
 		fclose(f4);
 		
-		//构建cnn_vec
+		//build cnn_vec
 		cnn_vec.resize(entity_num);
 		for(int ent=0;ent<entity_num;ent++)
 		{
-			//计算第一层convolutional layer & max-pooling layer
+			//1st convolutional layer & max-pooling layer
 			cnn_vec[ent].resize(n);
-			int l1_length = (entityWords_vec[ent].size()-1)/n_pooling_1+1;		//4-pooling
+			int l1_length = (entityWords_vec[ent].size()-1)/n_pooling_1+1;
 			vector<vector<double> > mid_vec;
-			mid_vec.resize(l1_length);		//init
+			mid_vec.resize(l1_length);
 			for(int k=0;k<l1_length;k++)
 				mid_vec[k].resize(n_1);
-			for(int k = 0;k<l1_length;k++)		//对第一层每个block计算结果并取max
+			for(int k = 0;k<l1_length;k++)
 			{
-				for(int j = 0;j<n_1;j++)		//对于n个维度
+				for(int j = 0;j<n_1;j++)
 				{
-					double tempMax = -2147483640;		//-INT_MAX
-					for(int i = n_pooling_1*k;i<n_pooling_1*(k+1);i++)		//对于entity words window
+					double tempMax = -2147483647;
+					for(int i = n_pooling_1*k;i<n_pooling_1*(k+1);i++)
 					{
-						if(i >= entityWords_vec[ent].size())		//add all-zero padding
+						if(i >= entityWords_vec[ent].size())
 							break;
 						double tempTokenValue = 0;
-						for(int ii = 0;ii<window_1;ii++)		//window
+						for(int ii = 0;ii<window_1;ii++)
 						{
-							if(i+ii >= entityWords_vec[ent].size())		//add all-zero padding
+							if(i+ii >= entityWords_vec[ent].size())
 								break;
-							int tempWordID = entityWords_vec[ent][i+ii];		//当前的wordid
-							for(int iii = 0;iii<n_w;iii++)		//对于word embedding的每一维
+							int tempWordID = entityWords_vec[ent][i+ii];
+							for(int iii = 0;iii<n_w;iii++)
 							{
 								tempTokenValue += word_vec[tempWordID][iii] * conv_w1[j][ii*n_w+iii];
 							}
@@ -217,24 +215,24 @@ public:
 						if(tempMax < tempTokenValue)
 							tempMax = tempTokenValue;
 					}
-					//加入非线性层hyperpolic tangent
+					//hyperpolic tangent
 					double tempExpo = exp(-2*tempMax);
-					mid_vec[k][j] = (1-tempExpo) / (1+tempExpo);		//记录entity embedding
+					mid_vec[k][j] = (1-tempExpo) / (1+tempExpo);
 				}
 			}
-			//计算第二层convolutional layer & max-pooling layer
-			for(int j = 0;j<n;j++)		//对于n个维度
+			//2nd convolutional layer & max-pooling layer
+			for(int j = 0;j<n;j++)
 			{
 				double tempExpo = 0;
 				int tempWordNum = 0;
-				for(int i = 0;i<l1_length;i++)		//对于entity words window
+				for(int i = 0;i<l1_length;i++)
 				{
 					double tempTokenValue = 0;
-					for(int ii = 0;ii<window_2;ii++)		//window
+					for(int ii = 0;ii<window_2;ii++)
 					{
-						if(i+ii >= l1_length)		//add all-zero padding
+						if(i+ii >= l1_length)
 							break;
-						for(int iii = 0;iii<n_1;iii++)		//对于mid_vec的每一维
+						for(int iii = 0;iii<n_1;iii++)
 						{
 							tempTokenValue += mid_vec[i+ii][iii] * conv_w2[j][ii*n_1+iii];
 						}
@@ -243,10 +241,10 @@ public:
 					tempExpo += tempTokenValue;
 					tempWordNum++;
 				}
-				//加入非线性层hyperpolic tangent
+				//hyperpolic tangent
 				tempExpo /= tempWordNum;
 				tempExpo = exp(-2*tempExpo);
-				cnn_vec[ent][j] = (1-tempExpo) / (1+tempExpo);		//记录entity embedding
+				cnn_vec[ent][j] = (1-tempExpo) / (1+tempExpo);
 			}
 			if(vec_len(cnn_vec[ent]) > 1)
 				cout << ent << ' ' << vec_len(cnn_vec[ent]) << endl;
@@ -267,9 +265,9 @@ public:
 		map<int,double> mid_p_n_r,mid_p_n_filter_r;
 		map<int,int> rel_num;
 
-		int hit_relation = 1;		//hits n，top n中正确的数
-		int hit_entity = 10;		//hits n，top n中正确的数
-		for (int testid = 0; testid<fb_l.size(); testid+=1)		//循环
+		int hit_relation = 1;
+		int hit_entity = 10;
+		for (int testid = 0; testid<fb_l.size(); testid+=1)
 		{
 			int h = fb_h[testid];
 			int l = fb_l[testid];
@@ -277,7 +275,7 @@ public:
 			double tmp = calc_sum(h,l,rel);
 			rel_num[rel]+=1;
 			vector<pair<int,double> > a;
-			for (int i=0; i<entity_num; i++)		//针对head的预测，对所有entity计算得分
+			for (int i=0; i<entity_num; i++)		//head
 			{
 				double sum = calc_sum(i,l,rel);
 				a.push_back(make_pair(i,sum));
@@ -311,7 +309,7 @@ public:
 				}
 			}
 			a.clear();
-			for (int i=0; i<entity_num; i++)		//针对tail的预测，对所有entity计算得分
+			for (int i=0; i<entity_num; i++)		//tail
 			{
 				double sum = calc_sum(h,i,rel);
 				a.push_back(make_pair(i,sum));
@@ -346,7 +344,7 @@ public:
 				}
 			}
 			a.clear();
-			for (int i=0; i<relation_num; i++)		//针对relation的预测，对所有relation计算得分
+			for (int i=0; i<relation_num; i++)		//relation
 			{
 				double sum = calc_sum(h,l,i);
 				a.push_back(make_pair(i,sum));
@@ -356,17 +354,17 @@ public:
 			filter=0;
 			for (int i=a.size()-1; i>=0; i--)
 			{
-				if (ok[make_pair(h,a[i].first)].count(l)>0)		//ttt为在test中存在此relation
+				if (ok[make_pair(h,a[i].first)].count(l)>0)
 					ttt++;
-				if (ok[make_pair(h,a[i].first)].count(l)==0)		//filter为在test中存在此relation
+				if (ok[make_pair(h,a[i].first)].count(l)==0)
 			    	filter+=1;
 				if (a[i].first==rel)
 				{
-					mid_sum+=a.size()-i;		//记录结果rank
+					mid_sum+=a.size()-i;
 					mid_sum_filter+=filter+1;
 					mid_sum_r[rel]+=a.size()-i;
 					mid_sum_filter_r[rel]+=filter+1;
-					if (a.size()-i<=hit_relation)		//统计hits n
+					if (a.size()-i<=hit_relation)
 					{
 						mid_p_n+=1;
 						mid_p_n_r[rel]+=1;
@@ -381,15 +379,17 @@ public:
 			}
 			if (testid%100==0)
 			{
-				cout<<testid<<":"<<"\t"<<lsum/(testid+1)<<' '<<lp_n/(testid+1)<<' '<<rsum/(testid+1)<<' '<<rp_n/(testid+1)<<"\t"<<lsum_filter/(testid+1)<<' '<<lp_n_filter/(testid+1)<<' '<<rsum_filter/(testid+1)<<' '<<rp_n_filter/(testid+1)<<endl;
+				cout<<testid<<":"<<endl;
+				cout<<"left:\t"<<lsum/(testid+1)<<' '<<lp_n/(testid+1)<<' '<<lsum_filter/(testid+1)<<' '<<lp_n_filter/(testid+1)<<endl;
+				cout<<"right:\t"<<rsum/(testid+1)<<' '<<rp_n/(testid+1)<<' '<<rsum_filter/(testid+1)<<' '<<rp_n_filter/(testid+1)<<endl;
 				cout<<"mid:\t"<<mid_sum/(testid+1)<<' '<<mid_p_n/(testid+1)<<"\t"<<mid_sum_filter/(testid+1)<<' '<<mid_p_n_filter/(testid+1)<<endl;
 			}
 		}
-		//输出到文件
+		//output
 		ofstream fout;
 		fout.open("../res.txt");
-		fout<<"left:"<<lsum/fb_l.size()<<'\t'<<lp_n/fb_l.size()<<"\t"<<lsum_filter/fb_l.size()<<'\t'<<lp_n_filter/fb_l.size()<<endl;
-		fout<<"right:"<<rsum/fb_r.size()<<'\t'<<rp_n/fb_r.size()<<'\t'<<rsum_filter/fb_r.size()<<'\t'<<rp_n_filter/fb_r.size()<<endl;
+		fout<<"left:\t"<<lsum/fb_l.size()<<'\t'<<lp_n/fb_l.size()<<"\t"<<lsum_filter/fb_l.size()<<'\t'<<lp_n_filter/fb_l.size()<<endl;
+		fout<<"right:\t"<<rsum/fb_r.size()<<'\t'<<rp_n/fb_r.size()<<'\t'<<rsum_filter/fb_r.size()<<'\t'<<rp_n_filter/fb_r.size()<<endl;
 		fout<<"mid:\t"<<mid_sum/fb_l.size()<<'\t'<<mid_p_n/fb_l.size()<<"\t"<<mid_sum_filter/fb_l.size()<<'\t'<<mid_p_n_filter/fb_l.size()<<endl;
 		for (int rel=0; rel<relation_num; rel++)
 		{
@@ -401,7 +401,6 @@ public:
 		}
 		fout.close();
     }
-
 };
 Test test;
 
@@ -427,7 +426,7 @@ void prepare()
 		id2relation[x]=st;
 		relation_num++;
 	}
-	//建立word2ID、ID2word map
+	//build word2ID、ID2word map
 	while (fscanf(f3,"%s%d",buf,&x)==2)
 	{
 		string st=buf;
@@ -435,19 +434,19 @@ void prepare()
 		id2word[x]=st;		//<ID,word>
 		word_num++;
 	}
-	//建立entityWords_vec 
-	entityWords_vec.resize(entity_num);		//entityWords_vec分配空间
+	//build entityWords_vec 
+	entityWords_vec.resize(entity_num);
 	while (fscanf(f4,"%s%d",buf,&x)==2)
 	{
 		string st=buf;		//entity
-		int temp_entity_id = entity2id[st];		//entity_id
+		int temp_entity_id = entity2id[st];
 		int temp_word_num = x;
 		entityWords_vec[temp_entity_id].resize(temp_word_num);
-		for(int i = 0;i<temp_word_num;i++)		//x个特征词
+		for(int i = 0;i<temp_word_num;i++)
 		{
-			fscanf(f4,"%s",buf);		//读入word
+			fscanf(f4,"%s",buf);
 			string st1=buf;		//word
-			entityWords_vec[temp_entity_id][i] = word2id[st1];		//build entityWords_vec
+			entityWords_vec[temp_entity_id][i] = word2id[st1];
 		}
 	}
     FILE* f_kb = fopen("../data/test.txt","r");
@@ -530,7 +529,6 @@ void prepare()
     fclose(f_kb2);
 }
 
-
 int main(int argc,char**argv)
 {
     if (argc<2)
@@ -544,4 +542,3 @@ int main(int argc,char**argv)
         test.run();
     }
 }
-

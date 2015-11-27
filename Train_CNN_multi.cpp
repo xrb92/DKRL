@@ -15,11 +15,11 @@
 #include<assert.h>
 using namespace std;
 
-#define pi 3.1415926535897932384626433832795
-#define THREADS_NUM 16
-
 //Ruobing Xie
 //Representation Learning of Knowledge Graphs with Entity Descriptions
+
+#define pi 3.1415926535897932384626433832795
+#define THREADS_NUM 16
 
 bool L1_flag=1;
 
