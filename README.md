@@ -19,4 +19,4 @@ We update both Structure-based Representations and Description-based Representat
 
 If you use the code, you should cite the following paper:
 
-Ruobing Xie, Zhiyuan Liu, Jia Jia, Huanbo Luan, Maosong Sun. Representation Learning of Knowledge Graphs with Entity Descriptions.
+Ruobing Xie, Zhiyuan Liu, Jia Jia, Huanbo Luan, Maosong Sun. Representation Learning of Knowledge Graphs with Entity Descriptions. The 30th AAAI Conference on Artificial Intelligence (AAAI'16).
