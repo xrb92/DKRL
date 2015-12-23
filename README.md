@@ -15,6 +15,10 @@ Just type make in the folder ./
 Pre-trained embeddings for entity/relation/word are optional.
 We update both Structure-based Representations and Description-based Representations in this version. We can also fix Structure-based Representations pre-trained by other models and only update Description-based Representations.
 
+
+FB15k is published by the author of the paper "Translating Embeddings for Modeling Multi-relational Data (2013)." 
+<a href="http://www.baidu.com" style="color:red;">内容</a>
+
 ===== CITE =====
 
 If you use the code, you should cite the following paper:
