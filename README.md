@@ -2,9 +2,11 @@
 
 New: Add FB15K data
 
+===== INTRODUCTION =====
+
 Description-Embodied Knowledge Representation Learning (DKRL)
 
-Representation Learning of Knowledge Graphs with Entity Descriptions
+Representation Learning of Knowledge Graphs with Entity Descriptions (AAAI'16)
 
 Ruobing Xie
 
