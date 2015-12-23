@@ -1,5 +1,7 @@
 # DKRL
 
+New: Add FB15K data
+
 Description-Embodied Knowledge Representation Learning (DKRL)
 
 Representation Learning of Knowledge Graphs with Entity Descriptions
@@ -15,9 +17,12 @@ Just type make in the folder ./
 Pre-trained embeddings for entity/relation/word are optional.
 We update both Structure-based Representations and Description-based Representations in this version. We can also fix Structure-based Representations pre-trained by other models and only update Description-based Representations.
 
+===== DATA =====
 
 FB15k is published by the author of the paper "Translating Embeddings for Modeling Multi-relational Data (2013)." 
-<a href="http://www.baidu.com" style="color:red;">内容</a>
+<a href="https://everest.hds.utc.fr/doku.php?id=en:transe">[download]</a>
+
+Entity descriptions of FB15k could be download <a href="http://pan.baidu.com/s/1sksdY81">here</a>
 
 ===== CITE =====
 
