@@ -22,7 +22,7 @@ We update both Structure-based Representations and Description-based Representat
 FB15k is published by the author of the paper "Translating Embeddings for Modeling Multi-relational Data (2013)." 
 <a href="https://everest.hds.utc.fr/doku.php?id=en:transe">[download]</a>
 
-Entity descriptions of FB15k could be download <a href="http://pan.baidu.com/s/1sksdY81">here</a>
+Entity descriptions of FB15k <a href="http://pan.baidu.com/s/1sksdY81">[download]</a>
 
 ===== CITE =====
 
