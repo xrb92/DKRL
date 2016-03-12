@@ -1,6 +1,6 @@
 # DKRL
 
-New: Add FB15K data
+New: Add FB20k data
 
 ===== INTRODUCTION =====
 
@@ -25,6 +25,8 @@ FB15k is published by the author of the paper "Translating Embeddings for Modeli
 <a href="https://everest.hds.utc.fr/doku.php?id=en:transe">[download]</a>
 
 Entity descriptions of FB15k <a href="http://pan.baidu.com/s/1sksdY81">[download]</a>
+
+FB20k is used for zero-shot scenario <a href="http://yun.baidu.com/s/1SAmGQ">[download]</a>
 
 ===== CITE =====
 
