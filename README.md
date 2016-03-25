@@ -1,6 +1,6 @@
 # DKRL
 
-New: Add FB20k data
+New: Add entity type information 
 
 ===== INTRODUCTION =====
 
