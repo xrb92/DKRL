@@ -28,6 +28,9 @@ Entity list and descriptions of FB15k used in this work <a href="http://pan.baid
 
 FB20k is used for zero-shot scenario <a href="http://yun.baidu.com/s/1SAmGQ">[download]</a>
 
+Entity type information for entity classification <a href="http://pan.baidu.com/s/1pLePRez">[download]</a>
+
+
 ===== CITE =====
 
 If you use the code, you should cite the following paper:
