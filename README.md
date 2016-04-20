@@ -32,6 +32,6 @@ Entity type information for entity classification <a href="http://pan.baidu.com/
 
 # CITE
 
-If you use the code, you should cite the following paper:
+If the codes or datasets help you, please cite the following paper:
 
 Ruobing Xie, Zhiyuan Liu, Jia Jia, Huanbo Luan, Maosong Sun. Representation Learning of Knowledge Graphs with Entity Descriptions. The 30th AAAI Conference on Artificial Intelligence (AAAI'16).
