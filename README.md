@@ -31,7 +31,7 @@ You can also get FB15k from here: <a href="http://pan.baidu.com/s/1eSvyY46">[dow
 
 Entity list and descriptions of FB15k used in this work <a href="http://pan.baidu.com/s/1kUx5Wr1">[download]</a>
 
-FB20k is used for zero-shot scenario <a href="http://yun.baidu.com/s/1SAmGQ">[download]</a>
+FB20k is based on FB15k and used for zero-shot scenario <a href="http://yun.baidu.com/s/1SAmGQ">[download]</a>
 
 Entity type information for entity classification <a href="http://pan.baidu.com/s/1pLePRez">[download]</a>
 
