@@ -35,6 +35,8 @@ FB20k is based on FB15k and used for zero-shot scenario <a href="http://yun.baid
 
 Entity type information for entity classification <a href="http://pan.baidu.com/s/1pLePRez">[download]</a>
 
+All these datasets are also in data.rar.
+
 
 # CITE
 
