@@ -37,6 +37,9 @@ Entity type information for entity classification <a href="http://pan.baidu.com/
 
 All these datasets are also in data.rar.
 
+Entity name file <a href="https://pan.baidu.com/s/1hsDneZE">[download]</a>
+
+
 
 # CITE
 
