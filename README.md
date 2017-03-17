@@ -22,6 +22,9 @@ Just type make in the folder ./
 Pre-trained embeddings for entity/relation/word are optional.
 We update both Structure-based Representations and Description-based Representations in this version. We can also fix Structure-based Representations pre-trained by other models and only update Description-based Representations.
 
+For DKRL, we learn structure-based representations (SBR) and description-based representations (DBR) simultaneously in training.
+However, Test_cnn.cpp only use description-based representations for prediction. You can load in both entity representations for joint prediction. 
+
 
 # DATA
 
