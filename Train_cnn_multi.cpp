@@ -175,7 +175,7 @@ void run(int n_in,int n_1_in,int n_w_in,double rate_in,double margin_in,int meth
 		norm(entity_vec[i]);
 	}
 	
-	//init by pre-trained word embeddings
+	//initialization for word embeddings
 	word_vec.resize(word_num);
 	for (int i=0; i<word_vec.size(); i++)
 		word_vec[i].resize(n_w);
@@ -185,6 +185,9 @@ void run(int n_in,int n_1_in,int n_w_in,double rate_in,double margin_in,int meth
 			word_vec[i][ii] = randn(0,1.0/n_w,-6/sqrt(n_w),6/sqrt(n_w));
 		norm(word_vec[i]);
 	}
+	
+	/*
+	// optional: init by pre-trained word embeddings
 	stringstream ss;
 	ss << n_w; 
 	string n_w_string = "../../../word2vec-41/word_vector_" + ss.str() + ".txt";
@@ -193,12 +196,21 @@ void run(int n_in,int n_1_in,int n_w_in,double rate_in,double margin_in,int meth
 	{
 		string st=buf;
 		if(word2id.count(st)==0)
-			continue;
-		int tempWordID = word2id[st];
-		for (int ii=0; ii<n_w; ii++)
-			fscanf(f1,"%lf",&word_vec[tempWordID][ii]);
-		norm(word_vec[tempWordID]);
+		{
+			vector<double> tempx_word_vec;
+			tempx_word_vec.resize(n_w);
+			for (int ii=0; ii<n_w; ii++)
+				fscanf(f1,"%lf",&tempx_word_vec[ii]);
+		}
+		else
+		{
+			int tempWordID = word2id[st];
+			for (int ii=0; ii<n_w; ii++)
+				fscanf(f1,"%lf",&word_vec[tempWordID][ii]);
+			norm(word_vec[tempWordID]);
+		}
 	}
+	*/
 	
 	//convolution init
 	conv_w1 = new double *[n_1];
