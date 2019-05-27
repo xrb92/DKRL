@@ -1104,9 +1104,9 @@ int main(int argc,char**argv)
 {
     srand((unsigned) time(NULL));
     int method = 1;
-    int n = 50;
-	int n_1 = 50;
-	int n_w = 50;
+    int n = 100;
+	int n_1 = 100;
+	int n_w = 100;
     double rate = 0.001;		//learning rate
     double margin = 1;		//loss margin
     int i;
