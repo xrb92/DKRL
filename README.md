@@ -1,6 +1,10 @@
 # DKRL
 
-New: Add entity type information 
+New: Add Evaluation code for DKRL(CNN)+TransE, additional TransE results are needed to run this evaluation.
+"../transE_res/entity2vec."+version
+"../transE_res/relation2vec."+version
+with the same dimension and unif/bern.
+
 
 
 # INTRODUCTION
